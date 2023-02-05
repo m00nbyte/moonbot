@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import moment from 'moment/min/moment-with-locales';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { countries } from 'country-flag-icons';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // functions
 import { manualSidebar } from 'src/functions/toggleSidebar';
@@ -29,7 +29,7 @@ import strings from 'src/strings';
 // types
 import { layoutPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     init: state.init,
@@ -63,26 +63,24 @@ const Layout = ({ strategy, offers, earnings, handleLoading, handleCurrent, hand
     };
 
     const handleLanguage = (value) => {
-        dispatch({ type: 'init', value: false });
-
-        handleLoading(true);
-
         if (
             strings.getAvailableLanguages().includes(value) &&
             moment.locales().includes(value) &&
             countries.includes(value.replace('en', 'us').toUpperCase())
         ) {
-            setTimeout(() => {
-                dispatch({ type: 'language', value });
+            dispatch({ type: 'init', value: false });
+            handleLoading(true);
 
+            dispatch({ type: 'language', value });
+
+            setTimeout(() => {
                 handleTour();
                 handleModal();
 
                 // navigate(0);
+                handleLoading(false);
             }, 200);
         }
-
-        handleLoading(false);
     };
 
     const handleLogout = () => {
@@ -114,7 +112,7 @@ const Layout = ({ strategy, offers, earnings, handleLoading, handleCurrent, hand
                 } else {
                     dispatch({ type: 'toast', value: { type: 'error', value: res.statusText } });
 
-                    if (res.status !== 500) {
+                    if (res.status === 403) {
                         dispatch({ type: 'auth', value: { id: null, token: null } });
                     }
                 }
@@ -128,53 +126,55 @@ const Layout = ({ strategy, offers, earnings, handleLoading, handleCurrent, hand
     }, [current, token, dispatch]);
 
     const fetchCoin = useCallback(async () => {
-        if (!init) handleLoading(true);
+        if (current !== '') {
+            if (!init) handleLoading(true);
 
-        try {
-            const res = await fetch(`${API_URL}/api/coin/${current}`, {
-                headers: {
-                    authorization: token
-                }
-            });
-
-            if (res.status === 200) {
-                const json = await res.json();
-
-                if (json.status) {
-                    if (!json || json.length === 0) {
-                        return;
+            try {
+                const res = await fetch(`${API_URL}/api/coin/${current}`, {
+                    headers: {
+                        authorization: token
                     }
+                });
 
-                    const { rStats, fList, cData, sData, eData, uData } = json;
+                if (res.status === 200) {
+                    const json = await res.json();
 
-                    if (!init) {
-                        dispatch({ type: 'init', value: true });
-                        if (sData) dispatch({ type: 'strategy', value: sData });
-                        if (eData) dispatch({ type: 'earnings', value: eData });
-                        if (uData) dispatch({ type: 'user', value: uData });
+                    if (json.status) {
+                        if (!json || json.length === 0) {
+                            return;
+                        }
+
+                        const { rStats, fList, cData, sData, eData, uData } = json;
+
+                        if (!init) {
+                            dispatch({ type: 'init', value: true });
+                            if (sData) dispatch({ type: 'strategy', value: sData });
+                            if (eData) dispatch({ type: 'earnings', value: eData });
+                            if (uData) dispatch({ type: 'user', value: uData });
+                        }
+
+                        if (rStats) dispatch({ type: 'stats', value: rStats });
+                        if (fList) dispatch({ type: 'coins', value: fList });
+                        if (cData) dispatch({ type: 'account', value: cData });
+                    } else {
+                        dispatch({ type: 'toast', value: { type: 'error', value: json.message } });
                     }
-
-                    if (rStats) dispatch({ type: 'stats', value: rStats });
-                    if (fList) dispatch({ type: 'coins', value: fList });
-                    if (cData) dispatch({ type: 'account', value: cData });
                 } else {
-                    dispatch({ type: 'toast', value: { type: 'error', value: json.message } });
-                }
-            } else {
-                dispatch({ type: 'toast', value: { type: 'error', value: res.statusText } });
+                    dispatch({ type: 'toast', value: { type: 'error', value: res.statusText } });
 
-                if (res.status !== 500) {
-                    dispatch({ type: 'auth', value: { id: null, token: null } });
+                    if (res.status === 403) {
+                        dispatch({ type: 'auth', value: { id: null, token: null } });
+                    }
                 }
+            } catch (error) {
+                dispatch({
+                    type: 'toast',
+                    value: { type: 'error', value: 'failedBackend' }
+                });
             }
-        } catch (error) {
-            dispatch({
-                type: 'toast',
-                value: { type: 'error', value: 'failedBackend' }
-            });
-        }
 
-        if (!init) handleLoading(false);
+            if (!init) handleLoading(false);
+        }
     }, [current, dispatch, handleLoading, init, token]);
 
     const fetchUser = useCallback(async () => {
@@ -204,7 +204,7 @@ const Layout = ({ strategy, offers, earnings, handleLoading, handleCurrent, hand
             } else {
                 dispatch({ type: 'toast', value: { type: 'error', value: res.statusText } });
 
-                if (res.status !== 500) {
+                if (res.status === 403) {
                     dispatch({ type: 'auth', value: { id: null, token: null } });
                 }
             }

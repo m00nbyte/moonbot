@@ -1,6 +1,6 @@
 // modules
 import clsx from 'clsx';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // functions
 import cardsList from 'src/functions/cardsList';
@@ -15,7 +15,7 @@ import useStore from 'src/store';
 // types
 import { offersPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     loading: state.loading,

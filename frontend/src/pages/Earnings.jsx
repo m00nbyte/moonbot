@@ -1,7 +1,7 @@
 // modules
 import clsx from 'clsx';
 import moment from 'moment';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // functions
 import cardsList from 'src/functions/cardsList';
@@ -23,7 +23,7 @@ import strings from 'src/strings';
 // types
 import { earningsPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     loading: state.loading,
@@ -162,7 +162,7 @@ const Earnings = ({ data, handleUpdate }) => {
 
                     <AreaChart
                         theme={theme}
-                        title='earnings-30d'
+                        title="earnings-30d"
                         labelName={localize.chart.tooltip.label}
                         labels={data?.earnings30d.map((item) => moment(item.mts).format('DD/MM/YYYY'), []).reverse()}
                         data={data?.earnings30d.map((item) => item.amount, []).reverse()}

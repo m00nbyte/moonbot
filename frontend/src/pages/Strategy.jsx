@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Switch from 'react-switch';
 import Select from 'react-tailwindcss-select';
 import { Tooltip, TooltipProvider } from 'react-tooltip';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // components
 import StrategyInfos from 'src/components/global/StrategyInfos';
@@ -20,7 +20,7 @@ import strings from 'src/strings';
 // types
 import { strategyPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     loading: state.loading,
@@ -311,7 +311,7 @@ const Strategy = ({ data, handleLoading }) => {
                                             {(data.active === data.select ? localize.active : localize.inactive).toUpperCase()}
                                         </span>
                                         <Switch
-                                            id='activeSwitch'
+                                            id="activeSwitch"
                                             className={clsx(['react-switch'])}
                                             onChange={handleActive}
                                             onColor={'#047857'}
@@ -329,7 +329,7 @@ const Strategy = ({ data, handleLoading }) => {
 
                     <TooltipProvider>
                         <div className={clsx(['tour-strategy-manage'])}>
-                            <Tooltip className={clsx(['text-white', 'dark:text-white', 'dark:bg-sky-900'])} place='top' />
+                            <Tooltip className={clsx(['text-white', 'dark:text-white', 'dark:bg-sky-900'])} place="top" />
 
                             {(data.select === 'simple' && (
                                 <SimpleStrategy

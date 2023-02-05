@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { TourProvider } from '@reactour/tour';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // state
 import useStore from 'src/store';

@@ -2,7 +2,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import moment from 'moment/min/moment-with-locales';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // components
 import Layout from 'src/Layout';
@@ -104,23 +104,28 @@ const App = () => {
     }, [theme]);
 
     useEffect(() => {
-        const root = window.document.documentElement;
-        root.setAttribute('lang', language);
-
-        strings.setLanguage(language);
-        moment.locale(language);
-    }, [language]);
-
-    useEffect(() => {
         if (toast.type && toast.value) {
             notify(toastRef, toast.type, strings.toasts[toast.value]);
             dispatch({ type: 'toast', value: { type: '', value: null } });
         }
     }, [toast, dispatch]);
 
+    const domLanguage = (lang) => {
+        const currentLanguage = lang || 'en';
+
+        const root = window.document.documentElement;
+        root.setAttribute('lang', currentLanguage);
+
+        strings.setLanguage(currentLanguage);
+        moment.locale(currentLanguage);
+    };
+
+    useEffect(() => {
+        domLanguage(language);
+    }, [language]);
+
     const setDefaultLanguage = useCallback(() => {
-        strings.setLanguage(language || 'en');
-        moment.locale(language || 'en');
+        domLanguage(language);
     }, [language]);
 
     useEffect(() => {
@@ -132,7 +137,7 @@ const App = () => {
             <ScrollToTop />
             <Routes>
                 <Route
-                    path='/'
+                    path="/"
                     element={
                         <Layout
                             strategy={strategy}
@@ -150,16 +155,16 @@ const App = () => {
                     }
                 >
                     <Route index element={<Home data={{ ...account, ...earnings, coins }} />} />
-                    <Route path='strategy' element={<Strategy data={strategy} handleLoading={handleLoading} />} />
-                    <Route path='offers' element={<Offers data={account} handleLoading={handleLoading} />} />
-                    <Route path='earnings' element={<Earnings data={earnings} handleUpdate={handleUpdate} />} />
-                    <Route path='settings' element={<Settings data={user} handleLoading={handleLoading} />} />
+                    <Route path="strategy" element={<Strategy data={strategy} handleLoading={handleLoading} />} />
+                    <Route path="offers" element={<Offers data={account} handleLoading={handleLoading} />} />
+                    <Route path="earnings" element={<Earnings data={earnings} handleUpdate={handleUpdate} />} />
+                    <Route path="settings" element={<Settings data={user} handleLoading={handleLoading} />} />
                 </Route>
-                <Route path='auth' element={<Auth auth={auth} handleAuth={handleAuth} handleLoading={handleLoading} />} />
-                <Route path='terms' element={<Terms />} />
-                <Route path='privacy' element={<Privacy />} />
-                <Route path='legal' element={<Legal />} />
-                <Route path='*' element={<NoPage />} />
+                <Route path="auth" element={<Auth auth={auth} handleAuth={handleAuth} handleLoading={handleLoading} />} />
+                <Route path="terms" element={<Terms />} />
+                <Route path="privacy" element={<Privacy />} />
+                <Route path="legal" element={<Legal />} />
+                <Route path="*" element={<NoPage />} />
             </Routes>
         </BrowserRouter>
     );

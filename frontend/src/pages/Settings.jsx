@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Lightbox from 'yet-another-react-lightbox';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // components
 import CustomSpinner from 'src/components/global/CustomSpinner';
@@ -22,7 +22,7 @@ import strings from 'src/strings';
 // types
 import { settingsPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     loading: state.loading,
@@ -368,9 +368,9 @@ const Settings = ({ data, handleLoading }) => {
                                                 'hover:border-b-stone-600',
                                                 'dark:hover:border-b-stone-300'
                                             ])}
-                                            href='https://support.bitfinex.com/hc/en-us/articles/115003363429-How-to-create-and-revoke-a-Bitfinex-API-Key'
-                                            target='_blank'
-                                            rel='noreferrer'
+                                            href="https://support.bitfinex.com/hc/en-us/articles/115003363429-How-to-create-and-revoke-a-Bitfinex-API-Key"
+                                            target="_blank"
+                                            rel="noreferrer"
                                         >
                                             <span className={clsx(['flex', 'space-x-1.5', 'items-center'])}>
                                                 <span>{localize.info.connectApi.link}</span>
@@ -385,7 +385,7 @@ const Settings = ({ data, handleLoading }) => {
                                 {strings.formatString(localize.info.permissions.label, {
                                     link: (
                                         <button
-                                            type='button'
+                                            type="button"
                                             className={clsx([
                                                 'flex',
                                                 'space-x-1',
@@ -487,7 +487,7 @@ const Settings = ({ data, handleLoading }) => {
                         </div>
                         <div className={clsx(['pt-8', 'flex', 'justify-between'])}>
                             <button
-                                type='submit'
+                                type="submit"
                                 className={clsx([
                                     'w-full',
                                     'px-5',

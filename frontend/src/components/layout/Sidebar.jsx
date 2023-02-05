@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useTour } from '@reactour/tour';
 import Select from 'react-tailwindcss-select';
 import { Tooltip, TooltipProvider } from 'react-tooltip';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // components
 import LogoButton from 'src/components/buttons/LogoButton';
@@ -204,7 +204,7 @@ const Sidebar = ({
             </div>
             <div className={clsx(['w-full', 'my-px', 'absolute', 'bottom-0', 'flex', 'flex-row'])}>
                 <TooltipProvider>
-                    <Tooltip className={clsx(['text-white', 'dark:text-white', 'dark:bg-sky-900'])} place='top' />
+                    <Tooltip className={clsx(['text-white', 'dark:text-white', 'dark:bg-sky-900'])} place="top" />
 
                     <TourButton text={localize.tour} manualTour={manualTour} />
                     <ThemeButton text={localize.theme} theme={theme} handleTheme={handleTheme} />

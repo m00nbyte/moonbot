@@ -1,5 +1,5 @@
 // modules
-import create from 'zustand';
+import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 
 // options
@@ -19,7 +19,6 @@ const useStore = create(
         })),
         {
             name: 'bot',
-            getStorage: () => localStorage,
             partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => persistKeys.includes(key)))
         }
     )

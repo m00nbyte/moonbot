@@ -1,7 +1,7 @@
 // modules
 import clsx from 'clsx';
 import Collapsible from 'react-collapsible';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // functions
 import cardsList from 'src/functions/cardsList';

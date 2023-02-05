@@ -83,7 +83,7 @@ const options = {
         step: 0
     },
     theme: 'light',
-    language: 'en',
+    language: null,
     modal: false,
     loading: false,
     lightbox: false,

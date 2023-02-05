@@ -24,7 +24,7 @@ const SignIn = ({ loading, toggle, register, handleSubmit, onSubmit, errors }) =
             defaultValue: '',
             disabled: loading,
             autocomplete: true,
-            autofocus: true
+            autofocus: false // true
         },
         {
             type: 'password',
@@ -53,9 +53,9 @@ const SignIn = ({ loading, toggle, register, handleSubmit, onSubmit, errors }) =
                     'shadow-md'
                 ])}
             >
-                <h1 className={clsx(['mb-8', 'font-bold', 'text-3xl', 'text-center', 'tracking-wide', 'uppercase'])}>
+                <h2 className={clsx(['mb-8', 'font-bold', 'text-2xl', 'text-center', 'tracking-wide', 'uppercase'])}>
                     {localize.title}
-                </h1>
+                </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {signInGrid.map((item, index) => (
@@ -65,7 +65,7 @@ const SignIn = ({ loading, toggle, register, handleSubmit, onSubmit, errors }) =
                     ))}
 
                     <button
-                        type='submit'
+                        type="submit"
                         className={clsx([
                             'w-full',
                             'px-5',
@@ -106,7 +106,7 @@ const SignIn = ({ loading, toggle, register, handleSubmit, onSubmit, errors }) =
                                     'dark:hover:border-stone-300',
                                     'transition-all'
                                 ])}
-                                href='/terms'
+                                href="/terms"
                             >
                                 {localize.tos}
                             </a>
@@ -126,7 +126,7 @@ const SignIn = ({ loading, toggle, register, handleSubmit, onSubmit, errors }) =
                                     'dark:hover:border-stone-300',
                                     'transition-all'
                                 ])}
-                                href='/privacy'
+                                href="/privacy"
                             >
                                 {localize.policy}
                             </a>

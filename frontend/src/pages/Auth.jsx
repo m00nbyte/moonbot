@@ -1,5 +1,5 @@
 // modules
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
@@ -7,12 +7,12 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import moment from 'moment/min/moment-with-locales';
 import { countries } from 'country-flag-icons';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // components
 import SignIn from 'src/components/auth/SignIn';
 import SignUp from 'src/components/auth/SignUp';
-import { CustomToast, notify } from 'src/components/global/CustomToast';
+import { CustomToast } from 'src/components/global/CustomToast';
 
 // state
 import useStore from 'src/store';
@@ -23,17 +23,16 @@ import strings from 'src/strings';
 // types
 import { authPageTypes } from 'src/types';
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 const stateSelector = (state) => ({
     loading: state.loading,
-    toastData: state.toast,
+    language: state.language,
     dispatch: state.dispatch
 });
 
 const Auth = ({ auth, handleAuth, handleLoading }) => {
-    const { loading, toastData, dispatch } = useStore(stateSelector, shallow);
-    const toastRef = useRef();
+    const { loading, language, dispatch } = useStore(stateSelector, shallow);
     const navigate = useNavigate();
 
     const localize = strings.auth;
@@ -139,7 +138,7 @@ const Auth = ({ auth, handleAuth, handleLoading }) => {
 
         const res = await postData(data);
 
-        if (res?.status) {
+        if (res.status) {
             handleAuth({ id: res.id, token: res.token });
             setTimeout(() => navigate('/'), 500);
         } else {
@@ -153,13 +152,7 @@ const Auth = ({ auth, handleAuth, handleLoading }) => {
     };
 
     useEffect(() => {
-        if (toastData.type && toastData.value) {
-            notify(toastRef, toastData.type, strings.toasts[toastData.value]);
-            dispatch({ type: 'toast', value: { type: '', value: null } });
-        }
-    }, [dispatch, toastData]);
-
-    useEffect(() => {
+        handleLoading(true);
         const value = strings.getInterfaceLanguage().split('-')[0];
 
         if (
@@ -167,11 +160,12 @@ const Auth = ({ auth, handleAuth, handleLoading }) => {
             moment.locales().includes(value) &&
             countries.includes(value.replace('en', 'us').toUpperCase())
         ) {
-            dispatch({ type: 'language', value });
+            if (language === null) dispatch({ type: 'language', value });
+            else dispatch({ type: 'language', value: language });
         }
 
         handleLoading(false);
-    }, [dispatch, handleLoading, navigate]);
+    }, [language, dispatch, handleLoading, navigate]);
 
     return (
         <div className={clsx(['min-h-screen', 'flex', 'flex-col', 'bg-stone-200', 'dark:bg-stone-900'])}>
@@ -190,6 +184,26 @@ const Auth = ({ auth, handleAuth, handleLoading }) => {
                     'justify-center'
                 ])}
             >
+                <h1
+                    className={clsx([
+                        'mb-6',
+                        'inline-flex',
+                        'flex-row',
+                        'space-x-3',
+                        'items-center',
+                        'font-bold',
+                        'text-4xl',
+                        'text-center',
+                        'leading-10',
+                        'text-black',
+                        'dark:text-white',
+                        'uppercase'
+                    ])}
+                >
+                    <img src="/img/android-chrome-192x192.png" alt="logo" width="33" />
+                    <span>moonbot</span>
+                </h1>
+
                 {auth.toggle ? (
                     <SignIn
                         loading={loading}

@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import clsx from 'clsx';
 import moment from 'moment';
 import Collapsible from 'react-collapsible';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 // functions
 import formatNumber from 'src/functions/formatNumber';
@@ -116,7 +116,7 @@ const StrategyInfos = memo(() => {
             >
                 <LineChart
                     theme={theme}
-                    title='funding-stats'
+                    title="funding-stats"
                     labels={stats.history.map((item) => moment(item[0]).format('DD/MM/YYYY'), []).reverse()}
                     data={stats.history.map((item) => item[3] * 365 * 100, []).reverse()}
                     customTooltip={customTooltip}
