@@ -1,0 +1,15 @@
+{
+    "cSpell.words": [],
+    "files.exclude": {
+        "backend/node_modules/": true,
+        "frontend/node_modules/": true
+    },
+    "json.schemas": [
+        {
+            "fileMatch": ["/*/package.json"],
+            "url": "https://json.schemastore.org/package",
+            "schema": true
+        }
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}

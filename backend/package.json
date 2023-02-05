@@ -1,0 +1,53 @@
+{
+    "name": "moonbot-backend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "server": "cross-env NODE_ENV=production node index",
+        "server:dev": "cross-env NODE_ENV=development nodemon --watch server index",
+        "submit-offers": "cross-env NODE_ENV=production node jobs/submit-offers",
+        "submit-offers:dev": "cross-env NODE_ENV=development node jobs/submit-offers",
+        "sync-earnings": "cross-env NODE_ENV=production node jobs/sync-earnings",
+        "sync-earnings:dev": "cross-env NODE_ENV=development node jobs/sync-earnings"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "bfx-api-node-rest": "^4.6.0",
+        "body-parser": "^1.20.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.4",
+        "mongoose": "^6.7.3",
+        "mongoose-paginate-v2": "^1.7.1",
+        "node-cache": "^5.1.2",
+        "node-fetch": "^3.3.0",
+        "node-schedule": "^2.1.0",
+        "pino": "^8.7.0"
+    },
+    "devDependencies": {
+        "cross-env": "^7.0.3",
+        "nodemon": "^2.0.20",
+        "pino-pretty": "^9.1.1"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

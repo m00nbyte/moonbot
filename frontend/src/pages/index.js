@@ -1,0 +1,10 @@
+export { default as Auth } from './Auth';
+export { default as Home } from './Home';
+export { default as Strategy } from './Strategy';
+export { default as Offers } from './Offers';
+export { default as Earnings } from './Earnings';
+export { default as Settings } from './Settings';
+export { default as Terms } from './Terms';
+export { default as Privacy } from './Privacy';
+export { default as Legal } from './Legal';
+export { default as NoPage } from './NoPage';
