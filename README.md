@@ -10,8 +10,6 @@
 :speech_balloon: multi-language (auto detect the system language)<br />
 :busstop: tour (short introduction into the website)<br />
 
-## :fire: Demo: [moonbot.org](https://moonbot.org/)
-
 ## :gear: Installation Steps:
 
 ```ini
@@ -84,3 +82,20 @@ $ sudo pm2 startup
 # update config (run if instances were modified)
 $ sudo pm2 save
 ```
+
+## [:straight_ruler: Code of Conduct](code-of-conduct.md)
+
+## [:card_index: Contributing Guidelines](contributing.md)
+
+## [:lock: Report Vulnerabilities](security.md)
+
+## [:page_with_curl: MIT License](license.md)
+
+## :heart: Like my work?
+
+This project needs a :star: from you.
+Don't forget to leave a star.
+
+<a href="https://www.buymeacoffee.com/m00nbyte" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="217" height="60">
+</a>
